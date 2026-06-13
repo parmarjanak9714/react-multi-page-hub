@@ -1,70 +1,56 @@
-# Getting Started with Create React App
+ Project Structure & Pages
+The application is structured into 5 distinct sections managed through react-router-dom:Home Page (/)The landing gateway of the website, styled with a clean global header (Navbar) and footer.About Us Page (/about)Introduces the company's core mission and values.Implements Nested Routing (<Outlet />) to toggle sub-sections dynamically without full page reloads.Sub-links included:Company: Reveals real-time agency specs.History: Highlights core historical timelines.Hidden Company Profile (/company-profile)A secure, hidden corporate document page.Functionality: It is completely excluded from the global Navbar. It can only be accessed if a user navigates to About -> Company and clicks the verified link, which uses target="_blank" to launch securely in a separate browser tab.Contact Me Page (/contact)A comprehensive, secure user-intake interface.FAQ Page (/faq)An interactive, highly optimized customer self-service center.Users Management Page (/users)A heavy data-manipulation dashboard tracking 10 detailed team profiles.
+_______________________________________________________________________________________________________
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+<!--  Core Features & Functionality -->
+1. Robust Form Validation Ecosystem (Contact Page)
+Powered entirely by React Hook Form, the contact form completely bypasses slow React states (useState) to capture inputs cleanly through uncontrolled references via the register handler.
 
-## Available Scripts
+. Username & Message: Fixed with custom required empty boundaries. Message is restricted to a maximum threshold (maxLength: 1000).
 
-In the project directory, you can run:
+. Email Pattern Matching: Enforced via Regex validation (/^\S+@\S+$/i) to reject improper strings immediately.
 
-### `npm start`
+. Secure Password Constraints: Validated dynamically to ensure the text contains a minimum of 6 characters, at least 1 uppercase letter (A-Z), and at least 1 unique symbol (!@#$%^&*).
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+. File Stream Verification (Image Upload): Binds the file input to strict browser extensions (accept="image/*"). Programmed with automated middleware boundaries ensuring the uploaded file strictly stays under a 2MB sizing threshold.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+. Cascading (Dependent) Dropdowns: Links the State select box to the City menu. Utilizing the watch() supervisor, changing a state causes the city dropdown to dynamically map the corresponding array data. Changing the state automatically triggers resetField('city') to wipe previous entries. Selecting "All States" merges the nested matrixes into a single flat array using Object.values().flat().
+__________________________________________________________________________________________________________
 
-### `npm test`
+<!-- 2. State-Driven Custom Accordion (FAQ Page) -->
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Smart Single-Open Logic: Controls multiple question rows using a single index value state (useState(null))
 
-### `npm run build`
+Conditional Short-Circuiting: Clicking a closed query binds its loop token (index) to the active state, triggering a re-render. Using conditional evaluation (openQuestion === index && ...), the active answer gate opens while automatically clearing and shutting all other parallel fields. Clicking an already active query resets the layout value back to null.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+__________________________________________________________________________________________________________
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+<!-- 3. Data Manipulation Dashboard (Users Page) -->
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Tracks 10 worker matrices containing unique id, name, position, and salary markers.
 
-### `npm run eject`
+<!-- . Immutability Safety: Clones the state array into a placeholder pointer (let displayedUsers = [...users]) prior to executing modifications to keep the master dataset pristine. -->
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+. Live Case-Insensitive Filtering: Features an instantaneous string filter via onChange inputs. It standardizes text casings via .toLowerCase() and maps alignments across the layout using .includes().
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+. Dynamic Arithmetic Array Sorting: Connects a custom dropdown selection to shorting algorithms:
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+=> Low to High: Orders metrics through ascending evaluations (a.salary - b.salary).
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+=> High to Low: Reverses layout distribution through descending adjustments (b.salary - a.salary).
 
-## Learn More
+. Component Array Eviction (Delete Feature): Clicking the element selector filters the state hook directly (user.id !== id), wiping the target index from view instantly. Reverting actions or performing a standard browser reload resets hooks to the default initial baseline layout.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+_________________________________________________________________________________________________________
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+<!-- . Tech Stack Used -->
 
-### Code Splitting
+. Frontend Library: React.js (Functional Components & Hooks)
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+. State Management Hooks: useState, watch, resetField, 
 
-### Analyzing the Bundle Size
+. formStateForm Ecosystem: React Hook 
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+. FormRouting Architecture: React Router DOM (BrowserRouter, Routes, Route, Link, Outlet)
 
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+. Styling Architecture: Custom CSS (Pure element scopes, structural flex/grid positioning, strict pointer hover transitions)
