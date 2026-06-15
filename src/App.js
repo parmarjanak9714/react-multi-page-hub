@@ -12,6 +12,7 @@ import History from './Pages/History'
 import CompanyProfile from './Pages/Company_Profile'
 import Faq from './Pages/Faq'
 import Users from './Pages/Users'
+import Weather from './Pages/Weather'
 const App = () => {
   return (
     <div>
@@ -35,6 +36,7 @@ const App = () => {
 
       <Route path='/faq' element={<Faq/>}/>
       <Route path='/users' element={<Users/>}/>
+      <Route path='/weather' element={<Weather/>}/>
     </Routes>
     <Footer/>
     </BrowserRouter>
