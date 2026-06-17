@@ -9,13 +9,19 @@ const initialUsers = [
   { id: 7, name: "Jignesh chauhan", position: "Data Analyst", salary: 45000 },
   { id: 8, name: "Karan mori", position: "DevOps Engineer", salary: 95000 },
   { id: 9, name: "Manoj parmar", position: "SEO Specialist", salary: 55000 },
-  { id: 10, name: "Nitin Baraiya", position: "HR Manager", salary: 70000 }
+  { id: 10, name: "Nitin Baraiya", position: "HR Manager", salary: 70000 },
+  { id:11, name: "Bharat Baraiya", position: "hardwere", salary:20000},
+  { id:12, name: "Naresh chuhan", position: "Data Analist", salary:25000},
+  { id:13, name: "Arayan Baraiya", position: "Paython Devloper", salary:28000},
+  { id:14, name: "Arjun Gouswami", position: "Sistem Desing", salary:29000}
 ];
 
 const Users = () => {
     const [users,setUsers] = useState(initialUsers);
     const [searchBar,setSearchBar]= useState("");
     const [sortBy,setSortBy] = useState("");
+    const [currentPage, setCurrentPage] = useState(1);
+    const itemPerPage = 4;
 
     //  deleted function
   const handleDelete = (id) => {
@@ -39,11 +45,21 @@ const Users = () => {
   } else if (sortBy === "high-to-low") {
     displayedUsers.sort((a, b) => b.salary - a.salary);
   }
+
+  
+  const indexOfLastUsers = currentPage * itemPerPage;
+  const indexOfFirstUsers = indexOfLastUsers - itemPerPage;
+
+  const currentUsers = displayedUsers.slice(indexOfFirstUsers,indexOfLastUsers);
+
+  const totalPage = Math.ceil(displayedUsers.length / itemPerPage);
+
   return (
     <div style={{ padding: '30px', maxWidth: '800px', margin: '0 auto', fontFamily: 'Arial' }}>
       <h1>Users Management</h1>
       <br />
-
+      <h3>Total Users : {displayedUsers.length}</h3>
+        <br/>
       {/* searchBar and dropDwon*/}
       <div style={{ display: 'flex', gap: '20px', marginBottom: '30px' }}>
         <input 
@@ -68,7 +84,7 @@ const Users = () => {
       {/* usersCard Grid */}
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
         {displayedUsers.length > 0 ? (
-          displayedUsers.map((user) => (
+          currentUsers.map((user) => (
             <div 
               key={user.id} 
               style={{ padding: '20px', background: '#fff', border: '1px solid #ddd', borderRadius: '8px', boxShadow: '0 2px 5px rgba(0,0,0,0.05)' }}
@@ -98,6 +114,24 @@ const Users = () => {
         ) : (
           <p style={{ gridColumn: '1/-1', textAlign: 'center', color: '#888' }}>No users found.</p>
         )}
+      </div>
+      <br/><br/>
+      <div style={{display:'flex',justifyContent:'center',alignItems:'center',gap:"15px",marginTop:"30"}}>
+        <button disabled={currentPage === 1}
+        onClick={()=>setCurrentPage(currentPage - 1)}
+        style={{ padding: "8px 16px", cursor: currentPage === 1 ? "not-allowed" : "pointer", opacity: currentPage === 1 ? 0.5 : 1 }}
+        >
+          Previous
+        </button>
+
+        <span>Page {currentPage} of {totalPage}</span>
+
+        <button disabled={currentPage===totalPage}
+        onClick={()=>setCurrentPage(currentPage + 1)}
+        style={{ padding: "8px 16px", cursor: currentPage === totalPage ? "not-allowed" : "pointer", opacity: currentPage === totalPage ? 0.5 : 1 }}
+        >
+          Next
+        </button>
       </div>
     </div>
   )

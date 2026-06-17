@@ -13,7 +13,7 @@ nav{
     display:flex;
     justify-content:center;
     align-items:center;
-    gap:30px;
+    gap:10px;
 }
 
 nav a{
@@ -146,4 +146,78 @@ footer p{
 
 .about-links a:hover{
     background:#444;
+}
+/* ૨-કૉલમ બ્લોગ ગ્રીડ લેઆઉટ */
+.blog-container {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 20px;
+    font-family: "Segoe UI", Roboto, sans-serif;
+    background: #ffffff;
+}
+
+.blog-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(450px, 1fr));
+    gap: 40px 30px;
+}
+
+/* સિંગલ બ્લોગ પોસ્ટ કાર્ડ */
+.blog-card {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+/* ટેગ્સ */
+.blog-tags {
+    display: flex;
+    gap: 8px;
+}
+
+.tag-news {
+    font-size: 11px;
+    background: #f5f5f5;
+    padding: 4px 10px;
+    border-radius: 4px;
+    color: #555;
+    font-weight: 600;
+}
+
+.tag-seo {
+    font-size: 11px;
+    background: #eef2ff;
+    padding: 4px 10px;
+    border-radius: 4px;
+    color: #4f46e5;
+    font-weight: 600;
+}
+
+/* ટાઈટલ અને કન્ટેન્ટ */
+.blog-title {
+    font-size: 20px;
+    color: #111;
+    line-height: 1.4;
+    margin: 0;
+    font-weight: 750;
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
+
+.blog-title:hover {
+    color: #4f46e5;
+}
+
+.blog-excerpt {
+    font-size: 14px;
+    color: #555;
+    line-height: 1.6;
+    margin: 0;
+}
+
+.blog-read-time {
+    font-size: 13px;
+    color: #999;
+    font-weight: 500;
 }

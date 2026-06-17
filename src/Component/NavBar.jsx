@@ -12,6 +12,12 @@ const NavBar = () => {
         <Link to='/faq'>FAQ</Link>
         <Link to='/users'>Users</Link>
         <Link to= '/weather'>Weather</Link>
+        <Link to='/product'>Products</Link>
+        <Link to= '/cart'>Cart</Link>
+        <Link to= '/loademore'>LoadeMore</Link>
+        <Link to= '/loadMoreUsers'>UsersLodeMore</Link>
+        <Link to= '/BlogGrid'>BlogeGrid</Link>
+        
       </nav>
     </div>
   );

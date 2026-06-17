@@ -9,34 +9,34 @@ const Weather = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
-  const apiHeaders = {
-    'x-rapidapi-host': 'open-weather13.p.rapidapi.com',
-    'x-rapidapi-key': 'f9209b469fmshf2af23fd60dd4ecp168634jsn365f9cd76dc6'
-  };
+  // const apiHeaders = {
+  //   'x-rapidapi-host': 'open-weather13.p.rapidapi.com',
+  //   'x-rapidapi-key': 'f9209b469fmshf2af23fd60dd4ecp168634jsn365f9cd76dc6'
+  // };
 
   // 💡 બેકઅપ મોક ડેટા: જો નેટવર્ક એરર આવે તો આ ડેટા ગ્રાફ અને સ્ક્રીન ચાલુ રાખશે
-  const loadMockData = (cityName) => {
-    setWeatherData({
-      name: cityName,
-      main: { temp: 102.2, humidity: 52 }, // 39°C આસપાસ ફેરનહીટ
-      wind: { speed: 7.2 },
-      weather: [{ main: "Sunny" }]
-    });
+  // const loadMockData = (cityName) => {
+  //   setWeatherData({
+  //     name: cityName,
+  //     main: { temp: 102.2, humidity: 52 }, // 39°C આસપાસ ફેરનહીટ
+  //     wind: { speed: 7.2 },
+  //     weather: [{ main: "Sunny" }]
+  //   });
 
-    const times = ["07 PM", "10 PM", "01 AM", "04 AM", "07 AM", "10 AM", "01 PM", "04 PM"];
-    const temps = [34, 32, 30, 29, 29, 33, 36, 38]; // તમારી ઈમેજ મુજબ સેમ ગ્રાફ પોઈન્ટ્સ
-    const days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun", "Mon"];
+    // const times = ["07 PM", "10 PM", "01 AM", "04 AM", "07 AM", "10 AM", "01 PM", "04 PM"];
+    // const temps = [34, 32, 30, 29, 29, 33, 36, 38]; // તમારી ઈમેજ મુજબ સેમ ગ્રાફ પોઈન્ટ્સ
+    // const days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun", "Mon"];
 
-    const mockForecast = times.map((t, idx) => ({
-      time: t,
-      day: days[idx],
-      temp: temps[idx],
-      humidity: 52,
-      wind: 26
-    }));
+    // const mockForecast = times.map((t, idx) => ({
+    //   time: t,
+    //   day: days[idx],
+    //   temp: temps[idx],
+    //   humidity: 52,
+    //   wind: 26
+    // }));
 
-    setForecastData(mockForecast);
-  };
+    // setForecastData(mockForecast);
+  // };
 
   const fetchWeather = async () => {
     if (!city.trim()) return;
@@ -47,11 +47,26 @@ const Weather = () => {
     let currentLat = null;
     let currentLon = null;
 
-    // 1️⃣ પહેલી API
+    const options = {
+  method: 'GET',
+  url: 'https://open-weather13.p.rapidapi.com/city',
+  params: {
+    city: city,
+    lang: 'EN'
+  },
+  headers: {
+    'x-rapidapi-key': 'f9209b469fmshf2af23fd60dd4ecp168634jsn365f9cd76dc6',
+    'x-rapidapi-host': 'open-weather13.p.rapidapi.com',
+    'Content-Type': 'application/json'
+  }
+};
+
+    // 1️ api
+    
     try {
-      const currentUrl = `https://rapidapi.com{encodeURIComponent(city.trim())}&lang=EN`;
-      const currentRes = await axios.get(currentUrl, { headers: apiHeaders });
-      
+      const currentRes = await axios.request(options);
+	console.log(currentRes.data);
+
       setWeatherData(currentRes.data);
       currentLat = currentRes.data.coord?.lat;
       currentLon = currentRes.data.coord?.lon;
@@ -59,16 +74,16 @@ const Weather = () => {
     } catch (err) {
       console.warn("First API failed, switching to offline backup view.", err);
       // જો નેટવર્ક એરર આવે તો પણ એપ બંધ નહિ થાય, ગૂગલ વેધર વ્યુ લોડ કરી દેશે
-      loadMockData(city);
+      // loadMockData(city);
       setLoading(false);
       return; 
     }
 
-    // 2️⃣ બીજી API
+    // 2 api
     if (currentLat !== null && currentLon !== null) {
       try {
         const forecastUrl = `https://rapidapi.com{currentLat}&longitude=${currentLon}&lang=EN`;
-        const forecastRes = await axios.get(forecastUrl, { headers: apiHeaders });
+        const forecastRes = await axios.get(forecastUrl);
 
         const listData = forecastRes.data?.list || forecastRes.data;
 
@@ -108,7 +123,7 @@ const Weather = () => {
     fetchWeather();
   };
 
-  const toCelsius = (fTemp) => fTemp ? Math.round((fTemp - 32) * 5/9) : '--';
+  // const toCelsius = (fTemp) => fTemp ? Math.round((fTemp - 32) * 5/9) : '--';
 
   return (
     <div style={{
@@ -149,7 +164,7 @@ const Weather = () => {
               }} />
               <div>
                 <span style={{ fontSize: '64px', fontWeight: '400', lineHeight: '1' }}>
-                  {toCelsius(weatherData.main?.temp)}
+                  {(weatherData.main?.temp)}
                 </span>
                 <span style={{ fontSize: '24px', verticalAlign: 'super', color: '#70757a' }}>°C</span>
               </div>
@@ -181,7 +196,7 @@ const Weather = () => {
             <span style={{ padding: '10px 0' }}>Wind</span>
           </div>
 
-          {/* ચાર્ટ ગ્રાફ વ્યુ */}
+          {/* chart graf view*/}
           {forecastData.length > 0 && (
             <div style={{ width: '100%', height: 120, marginTop: '20px' }}>
               <ResponsiveContainer width="100%" height="100%">
@@ -195,7 +210,7 @@ const Weather = () => {
             </div>
           )}
 
-          {/* આગામી દિવસોનું લિસ્ટ */}
+          {/*day list */}
           {forecastData.length > 0 && (
             <div style={{
               display: 'flex', justifyContent: 'space-between', marginTop: '25px', 

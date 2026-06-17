@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import NavBar from './Component/NavBar'
 import Home from './Pages/Home'
 import About from './Pages/About'
@@ -13,7 +13,13 @@ import CompanyProfile from './Pages/Company_Profile'
 import Faq from './Pages/Faq'
 import Users from './Pages/Users'
 import Weather from './Pages/Weather'
+import Products from './Pages/Products'
+import CartPage from './Pages/CartPage'
+import LoadMore from './Pages/LoadMore'
+import LoadMoreUsers from './Pages/LodeMoreUsers'
+import BlogGrid from './Pages/BlogGrid'
 const App = () => {
+  
   return (
     <div>
     <BrowserRouter>
@@ -37,6 +43,11 @@ const App = () => {
       <Route path='/faq' element={<Faq/>}/>
       <Route path='/users' element={<Users/>}/>
       <Route path='/weather' element={<Weather/>}/>
+      <Route path='/product' element={<Products/>}/>
+      <Route path='/cart' element={<CartPage/>}/>
+      <Route path='/loadeMore' element={<LoadMore/>}/>
+      <Route path='/loadMoreUsers' element={<LoadMoreUsers/>}/>
+      <Route path='/BlogGrid' element={<BlogGrid/>}/>    
     </Routes>
     <Footer/>
     </BrowserRouter>
